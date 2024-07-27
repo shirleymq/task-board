@@ -6,6 +6,8 @@
     height: 100%;
     overflow: hidden;
     padding: 0.8rem;
+    box-sizing: border-box;
+    
     background: #834d9b;
     /* fallback for old browsers */
     background: -webkit-linear-gradient(to left, #d04ed6, #834d9b);

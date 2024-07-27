@@ -12,7 +12,7 @@ function App() {
       <div><h3>Soy Un Panel</h3></div>
       <Panel className='panel-container'>
         <Lane className='lane' draggable >
-          <p>Shirley</p>
+         {/*  <p>Shirley</p> */}
         </Lane>
 
       </Panel>
