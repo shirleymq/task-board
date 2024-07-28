@@ -4,8 +4,14 @@ type LaneProps = HTMLAttributes<HTMLDivElement> & {
 }
 
 export const Lane: FC<PropsWithChildren<LaneProps>> = ({ children, className, ...props }) => {
+
+
   return (
-    <div className={`lane ${className}`} {...props} draggable>
+    <div
+      onDragStart={()=>{console.log("")}}
+      className={`lane ${className}`} {...props}
+      draggable
+    >
       {children}
       <div>
         Footer
