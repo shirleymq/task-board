@@ -5,7 +5,7 @@ import { Item } from "./components/item";
 import { useState } from "react";
 
 function App() {
-  const [lane, setLane] = useState(DATA);
+  const [lanes, setLanes] = useState(DATA);
 
   return (
     <>
@@ -13,7 +13,7 @@ function App() {
         <h3>Soy Un Panel</h3>
       </div>
       <Panel>
-        {lane.map((lane, index) => {
+        {lanes.map((lane, index) => {
           return (
             <Lane key={index}>
               <LaneHeader>{lane.title}</LaneHeader>
