@@ -8,7 +8,14 @@ export const Lane: FC<PropsWithChildren<LaneProps>> = ({
   ...props
 }) => {
   return (
-    <div className={`lane ${className}`} {...props} draggable>
+    <div
+      onDragStart={() => {
+        console.log("");
+      }}
+      className={`lane ${className}`}
+      {...props}
+      draggable
+    >
       {children}
     </div>
   );

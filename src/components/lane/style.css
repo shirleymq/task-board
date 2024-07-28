@@ -9,6 +9,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  height: fit-content;
 }
 
 .lane-header {
