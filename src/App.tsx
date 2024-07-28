@@ -1,6 +1,6 @@
 import "./App.css";
 import { Panel } from "./components/panel";
-import { Lane, LaneContent, LaneHeader } from "./components/lane";
+import { Lane, LaneContent, LaneFooter, LaneHeader } from "./components/lane";
 import { Item } from "./components/item";
 import { useState } from "react";
 
@@ -43,18 +43,13 @@ function App() {
                 {lane.title}
               </LaneHeader>
               <LaneContent>
-                {
-                  lane.items.map((item, index) => {
-                    return (
-                      <Item key={index}>
-                        {item.details}
-                      </Item>
-                    )
-                  })
-                }
+                {lane.items.map((item, index) => {
+                  return <Item key={index}>{item.details}</Item>;
+                })}
               </LaneContent>
+              <LaneFooter />
             </Lane>
-          )
+          );
         })}
       </Panel>
     </>
@@ -81,13 +76,13 @@ const DATA: Lane[] = [
     items: [
       {
         id: 1,
-        details: "Shirley"
+        details: "Shirley",
       },
       {
         id: 2,
-        details: "Edson"
-      }
-    ]
+        details: "Edson",
+      },
+    ],
   },
   {
     id: 2,
@@ -95,13 +90,13 @@ const DATA: Lane[] = [
     items: [
       {
         id: 3,
-        details: "Shirley"
+        details: "Shirley",
       },
       {
         id: 4,
-        details: "Edson"
-      }
-    ]
+        details: "Edson",
+      },
+    ],
   },
   {
     id: 3,
@@ -109,12 +104,12 @@ const DATA: Lane[] = [
     items: [
       {
         id: 5,
-        details: "Shirley"
+        details: "Shirley",
       },
       {
         id: 6,
-        details: "Edson"
-      }
-    ]
+        details: "Edson",
+      },
+    ],
   },
-]
+];

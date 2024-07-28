@@ -1,13 +1,12 @@
-@import url('components/item/style.css');
-@import url('components/lane/style.css');
-@import url('components/panel/style.css');
-
+@import url("components/item/style.css");
+@import url("components/lane/style.css");
+@import url("components/panel/style.css");
 
 #root {
   display: flex;
   flex-direction: column;
   height: 100vh;
-
+  color: #172b4d;
 }
 .atomo {
   background-color: brown;
