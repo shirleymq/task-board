@@ -1,12 +1,11 @@
-import { FC, HTMLAttributes, PropsWithChildren } from "react";
-import './panel.css'
-
-type PanelProps = HTMLAttributes<HTMLDivElement> & {
-    
+import { FC, HTMLAttributes } from "react";
+interface PanelProps extends HTMLAttributes<HTMLDivElement>  {
+    //name: string;
 }
-export const Panel:FC<PropsWithChildren<PanelProps>> = ({children, className, ...props}) => {
+
+export const Panel: FC<PanelProps> = ({children, className, ...props}) => {
   return (
-    <div className={className} {...props}>
+    <div className={`panel-container ${className}`} {...props} >
       {children}
     </div>
   )

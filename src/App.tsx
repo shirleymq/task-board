@@ -1,22 +1,284 @@
-import { useState } from "react";
 import "./App.css";
 import { Panel } from "./components/panel";
-import { Lane } from "./components/lane";
-import Item from "./components/item";
+import { Lane, LaneContent, LaneHeader } from "./components/lane";
+import { Item } from "./components/item";
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <>
       <div>
         <h3>Soy Un Panel</h3>
       </div>
-      <Panel className="panel-container">
-        <Lane className="lane" draggable>
-          {/*  <p>Shirley</p> */}
-          <Item />
+      <Panel>
+        <Lane>
+          <LaneHeader>
+            Carril 1
+          </LaneHeader>
+          <LaneContent>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+          </LaneContent>
         </Lane>
+        <Lane>
+          <LaneHeader>
+            Carril 2
+          </LaneHeader>
+          <LaneContent>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+          </LaneContent>
+        </Lane>
+        {/* <Lane>
+          <LaneHeader>
+            Carril 3
+          </LaneHeader>
+          <LaneContent>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+          </LaneContent>
+        </Lane>
+        <Lane>
+          <LaneHeader>
+            Carril 4
+          </LaneHeader>
+          <LaneContent>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+            <Item>
+              Shirley
+            </Item>
+            <Item>
+              Edson
+            </Item>
+          </LaneContent>
+        </Lane> */}
       </Panel>
     </>
   );

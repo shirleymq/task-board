@@ -1,0 +1,44 @@
+.lane {
+    min-width: 272px;
+    background-color: #f1f2f4;
+    border-radius: 10px;
+    min-height: 100px;
+    /* Múltiples sombras */
+    box-shadow: 0px 1px 1px #091e4240, 0px 0px 1px #091e424f;
+    padding: .4rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.lane-header {
+    padding: 5px 0px;
+}
+
+.lane-scrollbar {
+    display: grid;
+    gap: .1rem;
+    overflow-y:scroll;
+}
+
+/* Para navegadores Webkit */
+.lane-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.lane-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.lane-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.lane-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* .lane-scrollbar {
+    scrollbar-color: #888 #f1f1f1;
+    scrollbar-width: thin;
+} */

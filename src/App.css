@@ -1,6 +1,14 @@
+@import url('components/item/style.css');
+@import url('components/lane/style.css');
+@import url('components/panel/style.css');
+
+
 #root {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  
-} 
+
+}
+.atomo {
+  background-color: brown;
+}
