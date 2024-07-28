@@ -6,7 +6,25 @@ import { useState } from "react";
 
 function App() {
 
-  const [lane, setLane] = useState(DATA)
+  const [lanes, setLanes] = useState<Lane[]>(DATA)
+
+  const handleDropLane = (sourceId: number, targetId: number) => {
+    let copyLanes: Lane[] = JSON.parse(JSON.stringify(lanes));
+    let indexTarget=-1;
+    let indexSource=-1;
+    copyLanes.forEach((lane, index) => {
+      if(lane.id === sourceId){
+        indexSource = index;
+      }
+      if(lane.id === targetId){
+        indexTarget = index;
+      }
+    })
+    let sourceTemp = copyLanes[indexSource];
+    copyLanes[indexSource] = copyLanes[indexTarget];
+    copyLanes[indexTarget] = sourceTemp;
+    setLanes(copyLanes);
+  }
 
   return (
     <>
@@ -14,9 +32,13 @@ function App() {
         <h3>Soy Un Panel</h3>
       </div>
       <Panel>
-        {lane.map((lane, index) => {
+        {lanes.map((lane, index) => {
           return (
-            <Lane key={index} >
+            <Lane
+              key={index}
+              data={lane}
+              onDropHandle={handleDropLane}
+            >
               <LaneHeader>
                 {lane.title}
               </LaneHeader>
@@ -34,8 +56,6 @@ function App() {
             </Lane>
           )
         })}
-
-
       </Panel>
     </>
   );
@@ -43,8 +63,18 @@ function App() {
 
 export default App;
 
+export interface Lane {
+  id: number;
+  title: string;
+  items: Item[];
+}
 
-const DATA = [
+export interface Item {
+  id: number;
+  details: string;
+}
+
+const DATA: Lane[] = [
   {
     id: 1,
     title: "Carril 1",
