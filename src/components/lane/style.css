@@ -1,44 +1,73 @@
 .lane {
-    min-width: 272px;
-    background-color: #f1f2f4;
-    border-radius: 10px;
-    min-height: 100px;
-    /* Múltiples sombras */
-    box-shadow: 0px 1px 1px #091e4240, 0px 0px 1px #091e424f;
-    padding: .4rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
+  min-width: 272px;
+  background-color: #f1f2f4;
+  border-radius: 10px;
+  min-height: 100px;
+  /* Múltiples sombras */
+  box-shadow: 0px 1px 1px #091e4240, 0px 0px 1px #091e424f;
+  padding: 0.4rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .lane-header {
-    padding: 5px 0px;
+  padding: 5px 0px;
 }
 
 .lane-scrollbar {
-    display: grid;
-    gap: .1rem;
-    overflow-y:scroll;
+  display: grid;
+  gap: 0.1rem;
+  overflow-y: scroll;
 }
 
 /* Para navegadores Webkit */
 .lane-scrollbar::-webkit-scrollbar {
-    width: 5px;
+  width: 5px;
 }
 
 .lane-scrollbar::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }
 
 .lane-scrollbar::-webkit-scrollbar-thumb {
-    background: #888;
+  background: #888;
 }
 
 .lane-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
 }
 
 /* .lane-scrollbar {
     scrollbar-color: #888 #f1f1f1;
     scrollbar-width: thin;
 } */
+
+.lane-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 8px 0px 4px;
+  background-color: #f1f2f4;
+  cursor: pointer;
+}
+
+.lane-button {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 6px 12px 6px 8px;
+  border-radius: 8px;
+  background-color: transparent;
+  border: none;
+  line-height: 20px;
+  font-size: 14px;
+  color: #172b4d;
+  box-sizing: border-box;
+}
+
+.lane-button:hover {
+  background-color: #091e4224;
+}

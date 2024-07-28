@@ -1,10 +1,9 @@
 import "./App.css";
 import { Panel } from "./components/panel";
-import { Lane, LaneContent, LaneHeader } from "./components/lane";
+import { Lane, LaneContent, LaneFooter, LaneHeader } from "./components/lane";
 import { Item } from "./components/item";
 
 function App() {
-
   return (
     <>
       <div>
@@ -12,138 +11,56 @@ function App() {
       </div>
       <Panel>
         <Lane>
-          <LaneHeader>
-            Carril 1
-          </LaneHeader>
+          <LaneHeader>Carril 1</LaneHeader>
           <LaneContent>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
           </LaneContent>
+          <LaneFooter />
         </Lane>
         <Lane>
-          <LaneHeader>
-            Carril 2
-          </LaneHeader>
+          <LaneHeader>Carril 2</LaneHeader>
           <LaneContent>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
-            <Item>
-              Shirley
-            </Item>
-            <Item>
-              Edson
-            </Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
+            <Item>Shirley</Item>
+            <Item>Edson</Item>
           </LaneContent>
+          <LaneFooter />
         </Lane>
         {/* <Lane>
           <LaneHeader>
@@ -211,6 +128,7 @@ function App() {
               Edson
             </Item>
           </LaneContent>
+           <LaneFooter/>
         </Lane>
         <Lane>
           <LaneHeader>
@@ -278,6 +196,7 @@ function App() {
               Edson
             </Item>
           </LaneContent>
+           <LaneFooter/>
         </Lane> */}
       </Panel>
     </>
