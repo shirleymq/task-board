@@ -71,4 +71,5 @@
 
 .lane-button:hover {
   background-color: #091e4224;
+  cursor: pointer;
 }
