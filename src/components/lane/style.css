@@ -39,11 +39,6 @@
   background: #555;
 }
 
-/* .lane-scrollbar {
-    scrollbar-color: #888 #f1f1f1;
-    scrollbar-width: thin;
-} */
-
 .lane-footer {
   display: flex;
   align-items: center;
