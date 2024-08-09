@@ -4,13 +4,19 @@ type LaneProps = HTMLAttributes<HTMLDivElement> & {
   data: any;
   onDragStart?: (index: number) => void;
   onDropHandle: (sourceId: number, targetId: number) => void;
-}
+};
 
-export const Lane: FC<PropsWithChildren<LaneProps>> = ({ children, className, onDragStart, onDropHandle, data, ...props }) => {
-
+export const Lane: FC<PropsWithChildren<LaneProps>> = ({
+  children,
+  className,
+  onDragStart,
+  onDropHandle,
+  data,
+  ...props
+}) => {
   return (
     <div
-      onDragStart={(e) => {
+      /**onDragStart={(e) => {
         //console.log("Empezo", data.title)
         e.dataTransfer.effectAllowed = "move";
         e.dataTransfer.setData("lane/data", data.id.toString());
@@ -25,7 +31,16 @@ export const Lane: FC<PropsWithChildren<LaneProps>> = ({ children, className, on
         onDropHandle(id, data.id)
         
       }}
-      className={`lane ${className}`} {...props}
+      */
+      onDragOver={(e) => e.preventDefault()} // Permitir el arrastre sobre el carril
+      onDrop={(e) => {
+        e.preventDefault();
+        const itemId = parseInt(e.dataTransfer.getData("item/id"), 10);
+        const targetLaneId = data.id;
+        onDropHandle(itemId, targetLaneId);
+      }}
+      className={`lane ${className}`}
+      {...props}
       draggable
     >
       {children}
