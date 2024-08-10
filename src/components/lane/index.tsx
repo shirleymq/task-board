@@ -1,9 +1,11 @@
 import { FC, HTMLAttributes, PropsWithChildren } from "react";
 
 type LaneProps = HTMLAttributes<HTMLDivElement> & {
-  data: any;
-  onDragStart?: (index: number) => void;
-  onDropHandle: (sourceId: number, targetId: number) => void;
+  data: any; // Representa la información del carril
+  onDragStart?: (index: number) => void; // Manejador de evento para cuando un carril comienza a arrastrarse
+  onDropHandle: (sourceId: number, targetId: number) => void; // Manejador de evento para cuando un carril se suelta en otro carril
+  onDropItem?: (itemId: number, targetLaneId: number) => void; // Manejador de evento para cuando un ítem se suelta en un carril
+  onDragOver?: (hoveredLaneId: number) => void; // Manejador de evento para cuando un carril es arrastrado sobre otro
 };
 
 export const Lane: FC<PropsWithChildren<LaneProps>> = ({
@@ -11,33 +13,32 @@ export const Lane: FC<PropsWithChildren<LaneProps>> = ({
   className,
   onDragStart,
   onDropHandle,
+  onDragOver,
+  onDropItem,
   data,
   ...props
 }) => {
   return (
     <div
-      /**onDragStart={(e) => {
-        //console.log("Empezo", data.title)
+      onDragStart={(e) => {
+        console.log("Empezo", data.title);
         e.dataTransfer.effectAllowed = "move";
-        e.dataTransfer.setData("lane/data", data.id.toString());
+        e.dataTransfer.setData("lane/id", data.id.toString());
       }}
-      onDragOver={(e)=>{
-        e.preventDefault(); 
-        //console.log("sobre", data.title)
+      onDragOver={(e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+        onDragOver && onDragOver(data.id);
       }}
-      onDrop={(e) => {
-        //console.log("Solto", data.title)
-        let id = parseInt(e.dataTransfer.getData("lane/data"), 10)
-        onDropHandle(id, data.id)
-        
-      }}
-      */
-      onDragOver={(e) => e.preventDefault()} // Permitir el arrastre sobre el carril
       onDrop={(e) => {
         e.preventDefault();
-        const itemId = parseInt(e.dataTransfer.getData("item/id"), 10);
-        const targetLaneId = data.id;
-        onDropHandle(itemId, targetLaneId);
+        const laneId = e.dataTransfer.getData("lane/id");
+        const itemId = e.dataTransfer.getData("item/id");
+        if (itemId) {
+          onDropItem && onDropItem(parseInt(itemId, 10), data.id);
+        } else if (laneId) {
+          onDropHandle && onDropHandle(parseInt(laneId, 10), data.id);
+        }
       }}
       className={`lane ${className}`}
       {...props}
