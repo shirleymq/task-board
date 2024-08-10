@@ -6,6 +6,7 @@ import { useState } from "react";
 
 function App() {
   const [lanes, setLanes] = useState<Lane[]>(DATA);
+  const [draggedLaneId, setDraggedLaneId] = useState<number | null>(null);
 
   /**const handleDropLane = (sourceId: number, targetId: number) => {
     const copyLanes: Lane[] = JSON.parse(JSON.stringify(lanes));
@@ -25,7 +26,7 @@ function App() {
     setLanes(copyLanes);
   };*/
 
-  const handleDropLane = (itemId: number, targetLaneId: number) => {
+  const handleDropItem = (itemId: number, targetLaneId: number) => {
     const copyLanes: Lane[] = JSON.parse(JSON.stringify(lanes));
     let sourceLaneIndex = -1;
     let targetLaneIndex = -1;
@@ -51,6 +52,42 @@ function App() {
     setLanes(copyLanes);
   };
 
+  // Manejo de carriles
+  const handleDropLane = (sourceLaneId: number, targetLaneId: number) => {
+    const updatedLanes = [...lanes];
+    const sourceLaneIndex = updatedLanes.findIndex(
+      (lane) => lane.id === sourceLaneId
+    );
+    const targetLaneIndex = updatedLanes.findIndex(
+      (lane) => lane.id === targetLaneId
+    );
+
+    if (sourceLaneIndex !== -1 && targetLaneIndex !== -1) {
+      const [removedLane] = updatedLanes.splice(sourceLaneIndex, 1);
+      updatedLanes.splice(targetLaneIndex, 0, removedLane);
+    }
+
+    setDraggedLaneId(null);
+    setLanes(updatedLanes);
+  };
+
+  const handleDragOverLane = (hoveredLaneId: number) => {
+    // if (draggedLaneId !== null && draggedLaneId !== hoveredLaneId) {
+    //   const updatedLanes = [...lanes];
+    //   const draggedLaneIndex = updatedLanes.findIndex(
+    //     (lane) => lane.id === draggedLaneId
+    //   );
+    //   const hoveredLaneIndex = updatedLanes.findIndex(
+    //     (lane) => lane.id === hoveredLaneId
+    //   );
+    //   if (draggedLaneIndex !== -1 && hoveredLaneIndex !== -1) {
+    //     const [draggedLane] = updatedLanes.splice(draggedLaneIndex, 1);
+    //     updatedLanes.splice(hoveredLaneIndex, 0, draggedLane);
+    //     setLanes(updatedLanes);
+    //   }
+    // }
+  };
+
   return (
     <>
       <div>
@@ -59,7 +96,14 @@ function App() {
       <Panel>
         {lanes.map((lane, index) => {
           return (
-            <Lane key={index} data={lane} onDropHandle={handleDropLane}>
+            <Lane
+              key={index}
+              data={lane}
+              onDragStart={() => setDraggedLaneId(lane.id)}
+              onDragOver={handleDragOverLane}
+              onDropHandle={handleDropLane}
+              onDropItem={handleDropItem}
+            >
               <LaneHeader>{lane.title}</LaneHeader>
               <LaneContent>
                 {lane.items.map((item, index) => {
