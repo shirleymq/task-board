@@ -32,7 +32,6 @@ function App() {
     let targetLaneIndex = -1;
     let itemToMove: Item | null = null;
 
-    // Encontrar los carriles fuente y destino, y extraer el ítem que se va a mover
     copyLanes.forEach((lane, index) => {
       if (lane.items.some((item) => item.id === itemId)) {
         sourceLaneIndex = index;
@@ -45,14 +44,13 @@ function App() {
     });
 
     if (itemToMove && targetLaneIndex !== -1) {
-      // Insertar el ítem en la nueva posición en el carril de destino
       copyLanes[targetLaneIndex].items.push(itemToMove);
     }
 
     setLanes(copyLanes);
   };
 
-  // Manejo de carriles
+  // Manejo de carriles OK
   const handleDropLane = (sourceLaneId: number, targetLaneId: number) => {
     const updatedLanes = [...lanes];
     const sourceLaneIndex = updatedLanes.findIndex(
@@ -72,20 +70,20 @@ function App() {
   };
 
   const handleDragOverLane = (hoveredLaneId: number) => {
-    // if (draggedLaneId !== null && draggedLaneId !== hoveredLaneId) {
-    //   const updatedLanes = [...lanes];
-    //   const draggedLaneIndex = updatedLanes.findIndex(
-    //     (lane) => lane.id === draggedLaneId
-    //   );
-    //   const hoveredLaneIndex = updatedLanes.findIndex(
-    //     (lane) => lane.id === hoveredLaneId
-    //   );
-    //   if (draggedLaneIndex !== -1 && hoveredLaneIndex !== -1) {
-    //     const [draggedLane] = updatedLanes.splice(draggedLaneIndex, 1);
-    //     updatedLanes.splice(hoveredLaneIndex, 0, draggedLane);
-    //     setLanes(updatedLanes);
-    //   }
-    // }
+    /**if (draggedLaneId !== null && draggedLaneId !== hoveredLaneId) {
+      const updatedLanes = [...lanes];
+      const draggedLaneIndex = updatedLanes.findIndex(
+        (lane) => lane.id === draggedLaneId
+      );
+      const hoveredLaneIndex = updatedLanes.findIndex(
+        (lane) => lane.id === hoveredLaneId
+      );
+      if (draggedLaneIndex !== -1 && hoveredLaneIndex !== -1) {
+        const [draggedLane] = updatedLanes.splice(draggedLaneIndex, 1);
+        updatedLanes.splice(hoveredLaneIndex, 0, draggedLane);
+        setLanes(updatedLanes);
+      }
+    }*/
   };
 
   return (
@@ -112,6 +110,11 @@ function App() {
                       key={index}
                       onDragStart={(e) => {
                         e.dataTransfer.setData("item/id", item.id.toString());
+                        e.stopPropagation();
+                        console.log("arrastre ITEM iniciado", e);
+                      }}
+                      onDragOver={(e) => {
+                        console.log("item atrastado sobre este item ", index);
                       }}
                     >
                       {item.details}

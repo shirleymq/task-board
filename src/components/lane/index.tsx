@@ -21,7 +21,7 @@ export const Lane: FC<PropsWithChildren<LaneProps>> = ({
   return (
     <div
       onDragStart={(e) => {
-        console.log("Empezo", data.title);
+        console.log("arrastre LANE iniciado ", e);
         e.dataTransfer.effectAllowed = "move";
         e.dataTransfer.setData("lane/id", data.id.toString());
       }}
@@ -29,6 +29,7 @@ export const Lane: FC<PropsWithChildren<LaneProps>> = ({
         e.preventDefault();
         e.dataTransfer.dropEffect = "move";
         onDragOver && onDragOver(data.id);
+        console.log("elemento ATRASTRADO sobre este lane ", data.id);
       }}
       onDrop={(e) => {
         e.preventDefault();
@@ -36,8 +37,10 @@ export const Lane: FC<PropsWithChildren<LaneProps>> = ({
         const itemId = e.dataTransfer.getData("item/id");
         if (itemId) {
           onDropItem && onDropItem(parseInt(itemId, 10), data.id);
+          console.log("item soltado sobre lane", data.id);
         } else if (laneId) {
           onDropHandle && onDropHandle(parseInt(laneId, 10), data.id);
+          console.log("lane soltado sobre lane", data.id);
         }
       }}
       className={`lane ${className}`}
