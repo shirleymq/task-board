@@ -1,19 +1,19 @@
 import { FC, HTMLAttributes, PropsWithChildren } from "react";
 
 type LaneProps = HTMLAttributes<HTMLDivElement> & {
-  data: any; // Representa la información del carril
-  onDragStart?: (index: number) => void; // Manejador de evento para cuando un carril comienza a arrastrarse
-  onDropHandle: (sourceId: number, targetId: number) => void; // Manejador de evento para cuando un carril se suelta en otro carril
-  onDropItem?: (itemId: number, targetLaneId: number) => void; // Manejador de evento para cuando un ítem se suelta en un carril
-  onDragOver?: (hoveredLaneId: number) => void; // Manejador de evento para cuando un carril es arrastrado sobre otro
+  data: any;
+  onDragStart?: (index: number) => void;
+  onDropHandle: (sourceId: number, targetId: number) => void;
+  onDropItem?: (itemId: number, targetLaneId: number) => void;
+  onDragOver?: (hoveredLaneId: number) => void;
 };
 
 export const Lane: FC<PropsWithChildren<LaneProps>> = ({
   children,
   className,
   onDragStart,
-  onDropHandle,
   onDragOver,
+  onDropHandle,
   onDropItem,
   data,
   ...props
@@ -29,7 +29,7 @@ export const Lane: FC<PropsWithChildren<LaneProps>> = ({
         e.preventDefault();
         e.dataTransfer.dropEffect = "move";
         onDragOver && onDragOver(data.id);
-        console.log("elemento ATRASTRADO sobre este lane ", data.id);
+        //seria util para desplazar las tarjetas cuando sientan un elemento sobre ellas
       }}
       onDrop={(e) => {
         e.preventDefault();
@@ -37,10 +37,9 @@ export const Lane: FC<PropsWithChildren<LaneProps>> = ({
         const itemId = e.dataTransfer.getData("item/id");
         if (itemId) {
           onDropItem && onDropItem(parseInt(itemId, 10), data.id);
-          console.log("item soltado sobre lane", data.id);
         } else if (laneId) {
           onDropHandle && onDropHandle(parseInt(laneId, 10), data.id);
-          console.log("lane soltado sobre lane", data.id);
+          console.log("lane on drop");
         }
       }}
       className={`lane ${className}`}

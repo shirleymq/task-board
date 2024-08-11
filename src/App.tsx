@@ -6,27 +6,10 @@ import { useState } from "react";
 
 function App() {
   const [lanes, setLanes] = useState<Lane[]>(DATA);
-  const [draggedLaneId, setDraggedLaneId] = useState<number | null>(null);
-
-  /**const handleDropLane = (sourceId: number, targetId: number) => {
-    const copyLanes: Lane[] = JSON.parse(JSON.stringify(lanes));
-    let indexTarget = -1;
-    let indexSource = -1;
-    copyLanes.forEach((lane, index) => {
-      if (lane.id === sourceId) {
-        indexSource = index;
-      }
-      if (lane.id === targetId) {
-        indexTarget = index;
-      }
-    });
-    const sourceTemp = copyLanes[indexSource];
-    copyLanes[indexSource] = copyLanes[indexTarget];
-    copyLanes[indexTarget] = sourceTemp;
-    setLanes(copyLanes);
-  };*/
+  const [targetItemIndex, setTargetItemIndex] = useState<number | null>(null);
 
   const handleDropItem = (itemId: number, targetLaneId: number) => {
+    console.log("targetItemIndex ", targetItemIndex, null);
     const copyLanes: Lane[] = JSON.parse(JSON.stringify(lanes));
     let sourceLaneIndex = -1;
     let targetLaneIndex = -1;
@@ -44,13 +27,19 @@ function App() {
     });
 
     if (itemToMove && targetLaneIndex !== -1) {
-      copyLanes[targetLaneIndex].items.push(itemToMove);
+      if (
+        targetItemIndex !== null &&
+        copyLanes[targetLaneIndex].items.length > 0
+      ) {
+        copyLanes[targetLaneIndex].items.splice(targetItemIndex, 0, itemToMove);
+      } else {
+        copyLanes[targetLaneIndex].items.push(itemToMove);
+      }
     }
 
     setLanes(copyLanes);
   };
 
-  // Manejo de carriles OK
   const handleDropLane = (sourceLaneId: number, targetLaneId: number) => {
     const updatedLanes = [...lanes];
     const sourceLaneIndex = updatedLanes.findIndex(
@@ -64,27 +53,10 @@ function App() {
       const [removedLane] = updatedLanes.splice(sourceLaneIndex, 1);
       updatedLanes.splice(targetLaneIndex, 0, removedLane);
     }
-
-    setDraggedLaneId(null);
     setLanes(updatedLanes);
   };
 
-  const handleDragOverLane = (hoveredLaneId: number) => {
-    /**if (draggedLaneId !== null && draggedLaneId !== hoveredLaneId) {
-      const updatedLanes = [...lanes];
-      const draggedLaneIndex = updatedLanes.findIndex(
-        (lane) => lane.id === draggedLaneId
-      );
-      const hoveredLaneIndex = updatedLanes.findIndex(
-        (lane) => lane.id === hoveredLaneId
-      );
-      if (draggedLaneIndex !== -1 && hoveredLaneIndex !== -1) {
-        const [draggedLane] = updatedLanes.splice(draggedLaneIndex, 1);
-        updatedLanes.splice(hoveredLaneIndex, 0, draggedLane);
-        setLanes(updatedLanes);
-      }
-    }*/
-  };
+  const handleDragOverLane = (hoveredLaneId: number) => {};
 
   return (
     <>
@@ -94,36 +66,82 @@ function App() {
       <Panel>
         {lanes.map((lane, index) => {
           return (
-            <Lane
-              key={index}
-              data={lane}
-              onDragStart={() => setDraggedLaneId(lane.id)}
-              onDragOver={handleDragOverLane}
-              onDropHandle={handleDropLane}
-              onDropItem={handleDropItem}
+            <div
+              //style={{ backgroundColor: "blue" }}
+              onDragOver={(e) => {
+                e.preventDefault();
+                const rect = e.currentTarget.getBoundingClientRect();
+                const midY = rect.top + rect.height / 2;
+
+                if (e.clientY < midY) {
+                  console.log("Cursor en la mitad superior del div");
+                  //setTargetItemIndex(index);
+                } else {
+                  console.log("Cursor en la mitad inferior del div");
+                  setTargetItemIndex(lane.items.length);
+                }
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                const laneId = e.dataTransfer.getData("lane/id");
+                const itemId = e.dataTransfer.getData("item/id");
+                if (itemId) {
+                  handleDropItem &&
+                    handleDropItem(parseInt(itemId, 10), lane.id);
+                } else if (laneId) {
+                  handleDropLane &&
+                    handleDropLane(parseInt(laneId, 10), lane.id);
+                }
+              }}
             >
-              <LaneHeader>{lane.title}</LaneHeader>
-              <LaneContent>
-                {lane.items.map((item, index) => {
-                  return (
-                    <Item
-                      key={index}
-                      onDragStart={(e) => {
-                        e.dataTransfer.setData("item/id", item.id.toString());
-                        e.stopPropagation();
-                        console.log("arrastre ITEM iniciado", e);
-                      }}
-                      onDragOver={(e) => {
-                        console.log("item atrastado sobre este item ", index);
-                      }}
-                    >
-                      {item.details}
-                    </Item>
-                  );
-                })}
-              </LaneContent>
-              <LaneFooter />
-            </Lane>
+              <Lane
+                key={index}
+                data={lane}
+                onDragStart={() => console.log()}
+                onDragOver={handleDragOverLane}
+                onDropHandle={handleDropLane}
+                onDropItem={handleDropItem}
+              >
+                <LaneHeader>{lane.title}</LaneHeader>
+                <LaneContent>
+                  {lane.items.map((item, index) => {
+                    return (
+                      <Item
+                        key={index}
+                        onDragStart={(e) => {
+                          e.dataTransfer.setData("item/id", item.id.toString());
+                          e.stopPropagation();
+                          console.log("arrastre ITEM iniciado", e);
+                        }}
+                        onDragOver={(e) => {
+                          e.preventDefault();
+                          e.dataTransfer.dropEffect = "move";
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const midY = rect.top + rect.height / 2; // Calcula la mitad vertical del item
+
+                          if (e.clientY < midY) {
+                            console.log("Cursor en la mitad superior del item");
+                            setTargetItemIndex(index);
+                          } else {
+                            console.log("Cursor en la mitad inferior del item");
+                            setTargetItemIndex(index + 1);
+                          }
+                        }}
+                        onDragLeave={(e) => {
+                          console.log("item leave", item.details);
+                        }}
+                        onDragEnter={(e) => {
+                          console.log("item enter", item.details);
+                        }}
+                      >
+                        {item.details}
+                      </Item>
+                    );
+                  })}
+                </LaneContent>
+                <LaneFooter />
+              </Lane>
+            </div>
           );
         })}
       </Panel>
