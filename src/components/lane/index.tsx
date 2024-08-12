@@ -2,7 +2,6 @@ import { FC, HTMLAttributes, PropsWithChildren } from "react";
 
 type LaneProps = HTMLAttributes<HTMLDivElement> & {
   data: any;
-  onDragStart?: (index: number) => void;
   onDropHandle: (sourceId: number, targetId: number) => void;
   onDropItem?: (itemId: number, targetLaneId: number) => void;
   onDragOver?: (hoveredLaneId: number) => void;
@@ -11,17 +10,16 @@ type LaneProps = HTMLAttributes<HTMLDivElement> & {
 export const Lane: FC<PropsWithChildren<LaneProps>> = ({
   children,
   className,
-  onDragStart,
   onDragOver,
-  onDropHandle,
-  onDropItem,
+  /* onDropHandle,
+  onDropItem, */
   data,
   ...props
 }) => {
   return (
     <div
       onDragStart={(e) => {
-        console.log("arrastre LANE iniciado ", e);
+        console.log("arrastre LANE iniciado ", data.id);
         e.dataTransfer.effectAllowed = "move";
         e.dataTransfer.setData("lane/id", data.id.toString());
       }}
@@ -31,7 +29,7 @@ export const Lane: FC<PropsWithChildren<LaneProps>> = ({
         onDragOver && onDragOver(data.id);
         //seria util para desplazar las tarjetas cuando sientan un elemento sobre ellas
       }}
-      onDrop={(e) => {
+      /* onDrop={(e) => {
         e.preventDefault();
         const laneId = e.dataTransfer.getData("lane/id");
         const itemId = e.dataTransfer.getData("item/id");
@@ -41,7 +39,7 @@ export const Lane: FC<PropsWithChildren<LaneProps>> = ({
           onDropHandle && onDropHandle(parseInt(laneId, 10), data.id);
           console.log("lane on drop");
         }
-      }}
+      }} */
       className={`lane ${className}`}
       {...props}
       draggable

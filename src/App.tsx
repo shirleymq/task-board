@@ -97,7 +97,6 @@ function App() {
               <Lane
                 key={index}
                 data={lane}
-                onDragStart={() => console.log()}
                 onDragOver={handleDragOverLane}
                 onDropHandle={handleDropLane}
                 onDropItem={handleDropItem}
@@ -108,31 +107,9 @@ function App() {
                     return (
                       <Item
                         key={index}
-                        onDragStart={(e) => {
-                          e.dataTransfer.setData("item/id", item.id.toString());
-                          e.stopPropagation();
-                          console.log("arrastre ITEM iniciado", e);
-                        }}
-                        onDragOver={(e) => {
-                          e.preventDefault();
-                          e.dataTransfer.dropEffect = "move";
-                          const rect = e.currentTarget.getBoundingClientRect();
-                          const midY = rect.top + rect.height / 2; // Calcula la mitad vertical del item
-
-                          if (e.clientY < midY) {
-                            console.log("Cursor en la mitad superior del item");
-                            setTargetItemIndex(index);
-                          } else {
-                            console.log("Cursor en la mitad inferior del item");
-                            setTargetItemIndex(index + 1);
-                          }
-                        }}
-                        onDragLeave={(e) => {
-                          console.log("item leave", item.details);
-                        }}
-                        onDragEnter={(e) => {
-                          console.log("item enter", item.details);
-                        }}
+                        data={item}
+                        position={index}
+                        updateTargetIndex={setTargetItemIndex}
                       >
                         {item.details}
                       </Item>
