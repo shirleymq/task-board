@@ -1,35 +1,40 @@
-import { FC, HTMLAttributes, PropsWithChildren } from "react";
+import { FC, forwardRef, HTMLAttributes, PropsWithChildren } from "react";
 
 type LaneProps = HTMLAttributes<HTMLDivElement> & {
   data: any;
-  onDropHandle: (sourceId: number, targetId: number) => void;
-  onDropItem?: (itemId: number, targetLaneId: number) => void;
   onDragOver?: (hoveredLaneId: number) => void;
 };
 
-export const Lane: FC<PropsWithChildren<LaneProps>> = ({
-  children,
-  className,
-  onDragOver,
-  /* onDropHandle,
+export const Lane: FC<PropsWithChildren<LaneProps>> = forwardRef<
+  HTMLDivElement,
+  PropsWithChildren<LaneProps>
+>(
+  (
+    {
+      children,
+      className,
+      onDragOver,
+      /* onDropHandle,
   onDropItem, */
-  data,
-  ...props
-}) => {
-  return (
-    <div
-      onDragStart={(e) => {
-        console.log("arrastre LANE iniciado ", data.id);
-        e.dataTransfer.effectAllowed = "move";
-        e.dataTransfer.setData("lane/id", data.id.toString());
-      }}
-      onDragOver={(e) => {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = "move";
-        onDragOver && onDragOver(data.id);
-        //seria util para desplazar las tarjetas cuando sientan un elemento sobre ellas
-      }}
-      /* onDrop={(e) => {
+      data,
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <div
+        onDragStart={(e) => {
+          console.log("arrastre LANE iniciado ", data.id);
+          e.dataTransfer.effectAllowed = "move";
+          e.dataTransfer.setData("lane/id", data.id.toString());
+        }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = "move";
+          onDragOver && onDragOver(data.id);
+          //seria util para desplazar las tarjetas cuando sientan un elemento sobre ellas
+        }}
+        /* onDrop={(e) => {
         e.preventDefault();
         const laneId = e.dataTransfer.getData("lane/id");
         const itemId = e.dataTransfer.getData("item/id");
@@ -40,14 +45,16 @@ export const Lane: FC<PropsWithChildren<LaneProps>> = ({
           console.log("lane on drop");
         }
       }} */
-      className={`lane ${className}`}
-      {...props}
-      draggable
-    >
-      {children}
-    </div>
-  );
-};
+        className={`lane ${className}`}
+        ref={ref}
+        {...props}
+        draggable
+      >
+        {children}
+      </div>
+    );
+  }
+);
 
 interface LaneHeaderProps extends HTMLAttributes<HTMLHeadElement> {}
 export const LaneHeader: FC<LaneHeaderProps> = ({

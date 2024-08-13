@@ -2,11 +2,12 @@ import "./App.css";
 import { Panel } from "./components/panel";
 import { Lane, LaneContent, LaneFooter, LaneHeader } from "./components/lane";
 import { Item } from "./components/item";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 function App() {
   const [lanes, setLanes] = useState<Lane[]>(DATA);
   const [targetItemIndex, setTargetItemIndex] = useState<number | null>(null);
+  const laneRefs = useRef<(HTMLDivElement | null)[]>([]); // Ref para almacenar referencias a los Lanes
 
   const handleDropItem = (itemId: number, targetLaneId: number) => {
     console.log("targetItemIndex ", targetItemIndex, null);
@@ -67,18 +68,20 @@ function App() {
         {lanes.map((lane, index) => {
           return (
             <div
+              key={lane.id}
               //style={{ backgroundColor: "blue" }}
               onDragOver={(e) => {
                 e.preventDefault();
-                const rect = e.currentTarget.getBoundingClientRect();
-                const midY = rect.top + rect.height / 2;
-
-                if (e.clientY < midY) {
-                  console.log("Cursor en la mitad superior del div");
-                  //setTargetItemIndex(index);
-                } else {
-                  console.log("Cursor en la mitad inferior del div");
-                  setTargetItemIndex(lane.items.length);
+                const laneElement = laneRefs.current[index]; // Acceder al Lane correspondiente
+                if (laneElement) {
+                  const laneRect = laneElement.getBoundingClientRect();
+                  const bottomLaneY = laneRect.bottom;
+                  if (e.clientY < bottomLaneY) {
+                    console.log("cursor sobre lane");
+                  } else {
+                    console.log("cursor debajo de lane");
+                    setTargetItemIndex(lane.items.length);
+                  }
                 }
               }}
               onDrop={(e) => {
@@ -97,9 +100,8 @@ function App() {
               <Lane
                 key={index}
                 data={lane}
+                ref={(el) => (laneRefs.current[index] = el)}
                 onDragOver={handleDragOverLane}
-                onDropHandle={handleDropLane}
-                onDropItem={handleDropItem}
               >
                 <LaneHeader>{lane.title}</LaneHeader>
                 <LaneContent>

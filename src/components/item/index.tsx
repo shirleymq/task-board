@@ -25,13 +25,11 @@ export const Item: FC<PropsWithChildren<ItemProps>> = ({
         e.preventDefault();
         e.dataTransfer.dropEffect = "move";
         const rect = e.currentTarget.getBoundingClientRect();
-        const midY = rect.top + rect.height / 2; // Calcula la mitad vertical del item
+        const midY = rect.top + rect.height / 2;
         console.log("position index", position);
         if (e.clientY < midY) {
-          console.log("Cursor en la mitad superior del item");
           updateTargetIndex(position);
         } else {
-          console.log("Cursor en la mitad inferior del item");
           updateTargetIndex(position + 1);
         }
       }}
