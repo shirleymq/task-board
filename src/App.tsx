@@ -1,16 +1,26 @@
 import "./App.css";
 import { Panel } from "./components/panel";
-import { Lane, LaneContent, LaneFooter, LaneHeader } from "./components/lane";
+import {
+  Lane,
+  LaneBackground,
+  LaneContent,
+  LaneFooter,
+  LaneHeader,
+} from "./components/lane";
 import { Item } from "./components/item";
 import { useRef, useState } from "react";
 
 function App() {
   const [lanes, setLanes] = useState<Lane[]>(DATA);
   const [targetItemIndex, setTargetItemIndex] = useState<number | null>(null);
-  const laneRefs = useRef<(HTMLDivElement | null)[]>([]); // Ref para almacenar referencias a los Lanes
+  const laneRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [showPlaceholder, setShowPlaceholder] = useState<{
+    laneId: number | null;
+    itemIndex: number | null;
+  }>({ laneId: null, itemIndex: null });
 
   const handleDropItem = (itemId: number, targetLaneId: number) => {
-    console.log("targetItemIndex ", targetItemIndex, null);
+    console.log("targetItemIndex ", targetItemIndex);
     const copyLanes: Lane[] = JSON.parse(JSON.stringify(lanes));
     let sourceLaneIndex = -1;
     let targetLaneIndex = -1;
@@ -28,17 +38,24 @@ function App() {
     });
 
     if (itemToMove && targetLaneIndex !== -1) {
-      if (
+      /**if (
         targetItemIndex !== null &&
         copyLanes[targetLaneIndex].items.length > 0
       ) {
         copyLanes[targetLaneIndex].items.splice(targetItemIndex, 0, itemToMove);
       } else {
         copyLanes[targetLaneIndex].items.push(itemToMove);
-      }
+      }*/
+      const insertIndex =
+        showPlaceholder.laneId === targetLaneId &&
+        showPlaceholder.itemIndex !== null
+          ? showPlaceholder.itemIndex
+          : copyLanes[targetLaneIndex].items.length;
+      copyLanes[targetLaneIndex].items.splice(insertIndex, 0, itemToMove);
     }
 
     setLanes(copyLanes);
+    setShowPlaceholder({ laneId: null, itemIndex: null });
   };
 
   const handleDropLane = (sourceLaneId: number, targetLaneId: number) => {
@@ -67,35 +84,13 @@ function App() {
       <Panel>
         {lanes.map((lane, index) => {
           return (
-            <div
-              key={lane.id}
-              //style={{ backgroundColor: "blue" }}
-              onDragOver={(e) => {
-                e.preventDefault();
-                const laneElement = laneRefs.current[index]; // Acceder al Lane correspondiente
-                if (laneElement) {
-                  const laneRect = laneElement.getBoundingClientRect();
-                  const bottomLaneY = laneRect.bottom;
-                  if (e.clientY < bottomLaneY) {
-                    console.log("cursor sobre lane");
-                  } else {
-                    console.log("cursor debajo de lane");
-                    setTargetItemIndex(lane.items.length);
-                  }
-                }
-              }}
-              onDrop={(e) => {
-                e.preventDefault();
-                const laneId = e.dataTransfer.getData("lane/id");
-                const itemId = e.dataTransfer.getData("item/id");
-                if (itemId) {
-                  handleDropItem &&
-                    handleDropItem(parseInt(itemId, 10), lane.id);
-                } else if (laneId) {
-                  handleDropLane &&
-                    handleDropLane(parseInt(laneId, 10), lane.id);
-                }
-              }}
+            <LaneBackground
+              key={index}
+              data={lane}
+              laneRef={laneRefs.current[index]}
+              onDropItem={handleDropItem}
+              onDropLane={handleDropLane}
+              updateTargetIndex={setTargetItemIndex}
             >
               <Lane
                 key={index}
@@ -107,20 +102,48 @@ function App() {
                 <LaneContent>
                   {lane.items.map((item, index) => {
                     return (
-                      <Item
-                        key={index}
-                        data={item}
-                        position={index}
-                        updateTargetIndex={setTargetItemIndex}
-                      >
-                        {item.details}
-                      </Item>
+                      <>
+                        {showPlaceholder.laneId === lane.id &&
+                          showPlaceholder.itemIndex === index && (
+                            <div
+                              style={{
+                                height: "50px",
+                                backgroundColor: "lightgray",
+                                margin: "5px 0",
+                              }}
+                            ></div>
+                          )}
+                        <Item
+                          key={index}
+                          data={item}
+                          position={index}
+                          updateTargetIndex={(index) => {
+                            setTargetItemIndex(index);
+                            setShowPlaceholder({
+                              laneId: lane.id,
+                              itemIndex: index,
+                            });
+                          }}
+                        >
+                          {item.details}
+                        </Item>
+                      </>
                     );
                   })}
+                  {showPlaceholder.laneId === lane.id &&
+                    showPlaceholder.itemIndex === lane.items.length && (
+                      <div
+                        style={{
+                          height: "50px",
+                          backgroundColor: "lightgray",
+                          margin: "5px 0",
+                        }}
+                      ></div>
+                    )}
                 </LaneContent>
                 <LaneFooter />
               </Lane>
-            </div>
+            </LaneBackground>
           );
         })}
       </Panel>

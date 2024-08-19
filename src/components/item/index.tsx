@@ -19,14 +19,12 @@ export const Item: FC<PropsWithChildren<ItemProps>> = ({
       onDragStart={(e) => {
         e.dataTransfer.setData("item/id", data.id.toString());
         e.stopPropagation();
-        console.log("arrastre iniciado ITEM", data.details);
       }}
       onDragOver={(e) => {
         e.preventDefault();
         e.dataTransfer.dropEffect = "move";
         const rect = e.currentTarget.getBoundingClientRect();
         const midY = rect.top + rect.height / 2;
-        console.log("position index", position);
         if (e.clientY < midY) {
           updateTargetIndex(position);
         } else {
