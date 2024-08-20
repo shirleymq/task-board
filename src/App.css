@@ -1,6 +1,7 @@
 @import url("components/item/style.css");
 @import url("components/lane/style.css");
 @import url("components/panel/style.css");
+@import url("components/blank-space/style.css");
 
 #root {
   display: flex;
