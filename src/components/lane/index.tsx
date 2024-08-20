@@ -56,6 +56,7 @@ export const LaneBackground: FC<LaneBackgroundProps> = ({
       style={{ backgroundColor: "blue" }}
       onDragOver={(e) => {
         e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
         const laneElement = laneRef;
         if (laneElement) {
           const laneRect = laneElement.getBoundingClientRect();

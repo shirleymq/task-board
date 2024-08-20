@@ -9,6 +9,7 @@ import {
 } from "./components/lane";
 import { Item } from "./components/item";
 import { useRef, useState } from "react";
+import { BlankSpace } from "./components/blank-space";
 
 function App() {
   const [lanes, setLanes] = useState<Lane[]>(DATA);
@@ -90,7 +91,14 @@ function App() {
               laneRef={laneRefs.current[index]}
               onDropItem={handleDropItem}
               onDropLane={handleDropLane}
-              updateTargetIndex={setTargetItemIndex}
+              //updateTargetIndex={setTargetItemIndex}
+              updateTargetIndex={(index) => {
+                setTargetItemIndex(index);
+                setShowPlaceholder({
+                  laneId: lane.id,
+                  itemIndex: index,
+                });
+              }}
             >
               <Lane
                 key={index}
@@ -105,13 +113,7 @@ function App() {
                       <>
                         {showPlaceholder.laneId === lane.id &&
                           showPlaceholder.itemIndex === index && (
-                            <div
-                              style={{
-                                height: "50px",
-                                backgroundColor: "lightgray",
-                                margin: "5px 0",
-                              }}
-                            ></div>
+                            <BlankSpace height="50px" />
                           )}
                         <Item
                           key={index}
@@ -132,13 +134,7 @@ function App() {
                   })}
                   {showPlaceholder.laneId === lane.id &&
                     showPlaceholder.itemIndex === lane.items.length && (
-                      <div
-                        style={{
-                          height: "50px",
-                          backgroundColor: "lightgray",
-                          margin: "5px 0",
-                        }}
-                      ></div>
+                      <BlankSpace height="50px" />
                     )}
                 </LaneContent>
                 <LaneFooter />
