@@ -53,7 +53,6 @@ export const LaneBackground: FC<LaneBackgroundProps> = ({
     <div
       className={`lane-background ${className}`}
       {...props}
-      //style={{ backgroundColor: "blue" }}
       onDragOver={(e) => {
         e.preventDefault();
         e.dataTransfer.dropEffect = "move";
