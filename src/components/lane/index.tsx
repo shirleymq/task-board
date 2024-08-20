@@ -53,16 +53,19 @@ export const LaneBackground: FC<LaneBackgroundProps> = ({
     <div
       className={`lane-background ${className}`}
       {...props}
-      style={{ backgroundColor: "blue" }}
       onDragOver={(e) => {
         e.preventDefault();
         e.dataTransfer.dropEffect = "move";
         const laneElement = laneRef;
+        console.log("REF ", laneElement);
         if (laneElement) {
           const laneRect = laneElement.getBoundingClientRect();
           const bottomLaneY = laneRect.bottom;
           if (e.clientY < bottomLaneY) {
             console.log("cursor sobre lane");
+            if (data.items.length == 0) {
+              updateTargetIndex(0);
+            }
           } else {
             console.log("cursor debajo de lane");
             updateTargetIndex(data.items.length);

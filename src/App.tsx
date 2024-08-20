@@ -19,6 +19,7 @@ function App() {
     laneId: number | null;
     itemIndex: number | null;
   }>({ laneId: null, itemIndex: null });
+  const [height, setHeight] = useState<string>("0px");
 
   const handleDropItem = (itemId: number, targetLaneId: number) => {
     console.log("targetItemIndex ", targetItemIndex);
@@ -57,6 +58,7 @@ function App() {
 
     setLanes(copyLanes);
     setShowPlaceholder({ laneId: null, itemIndex: null });
+    setHeight("0px");
   };
 
   const handleDropLane = (sourceLaneId: number, targetLaneId: number) => {
@@ -91,12 +93,11 @@ function App() {
               laneRef={laneRefs.current[index]}
               onDropItem={handleDropItem}
               onDropLane={handleDropLane}
-              //updateTargetIndex={setTargetItemIndex}
-              updateTargetIndex={(index) => {
-                setTargetItemIndex(index);
+              updateTargetIndex={(index2) => {
+                //setTargetItemIndex(index2);
                 setShowPlaceholder({
                   laneId: lane.id,
-                  itemIndex: index,
+                  itemIndex: index2,
                 });
               }}
             >
@@ -113,19 +114,20 @@ function App() {
                       <>
                         {showPlaceholder.laneId === lane.id &&
                           showPlaceholder.itemIndex === index && (
-                            <BlankSpace height="50px" />
+                            <BlankSpace height={height} />
                           )}
                         <Item
                           key={index}
                           data={item}
                           position={index}
                           updateTargetIndex={(index) => {
-                            setTargetItemIndex(index);
+                            //setTargetItemIndex(index);
                             setShowPlaceholder({
                               laneId: lane.id,
                               itemIndex: index,
                             });
                           }}
+                          updateHeight={setHeight}
                         >
                           {item.details}
                         </Item>
@@ -134,7 +136,7 @@ function App() {
                   })}
                   {showPlaceholder.laneId === lane.id &&
                     showPlaceholder.itemIndex === lane.items.length && (
-                      <BlankSpace height="50px" />
+                      <BlankSpace height={height} />
                     )}
                 </LaneContent>
                 <LaneFooter />
@@ -181,7 +183,7 @@ const DATA: Lane[] = [
     items: [
       {
         id: 3,
-        details: "Shirley 2",
+        details: "Shirley 2 Shirley 2 Shirley 2 Shirley 2",
       },
       {
         id: 4,

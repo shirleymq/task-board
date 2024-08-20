@@ -4,6 +4,7 @@ type ItemProps = HTMLAttributes<HTMLDivElement> & {
   data: any;
   position: number;
   updateTargetIndex: (index: number) => void;
+  updateHeight: (height: string) => void;
 };
 
 export const Item: FC<PropsWithChildren<ItemProps>> = ({
@@ -12,12 +13,17 @@ export const Item: FC<PropsWithChildren<ItemProps>> = ({
   data,
   position,
   updateTargetIndex,
+  updateHeight,
   ...props
 }) => {
   return (
     <div
       onDragStart={(e) => {
         e.dataTransfer.setData("item/id", data.id.toString());
+        const rect = e.currentTarget.getBoundingClientRect();
+        const height = rect.height;
+        updateHeight(`${height}px`);
+
         e.stopPropagation();
       }}
       onDragOver={(e) => {
