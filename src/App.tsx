@@ -13,7 +13,7 @@ import { BlankSpace } from "./components/blank-space";
 
 function App() {
   const [lanes, setLanes] = useState<Lane[]>(DATA);
-  const [targetItemIndex, setTargetItemIndex] = useState<number | null>(null);
+  //const [targetItemIndex, setTargetItemIndex] = useState<number | null>(null);
   const laneRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [showPlaceholder, setShowPlaceholder] = useState<{
     laneId: number | null;
@@ -22,7 +22,7 @@ function App() {
   const [height, setHeight] = useState<string>("0px");
 
   const handleDropItem = (itemId: number, targetLaneId: number) => {
-    console.log("targetItemIndex ", targetItemIndex);
+    //console.log("targetItemIndex ", targetItemIndex);
     const copyLanes: Lane[] = JSON.parse(JSON.stringify(lanes));
     let sourceLaneIndex = -1;
     let targetLaneIndex = -1;
@@ -40,14 +40,6 @@ function App() {
     });
 
     if (itemToMove && targetLaneIndex !== -1) {
-      /**if (
-        targetItemIndex !== null &&
-        copyLanes[targetLaneIndex].items.length > 0
-      ) {
-        copyLanes[targetLaneIndex].items.splice(targetItemIndex, 0, itemToMove);
-      } else {
-        copyLanes[targetLaneIndex].items.push(itemToMove);
-      }*/
       const insertIndex =
         showPlaceholder.laneId === targetLaneId &&
         showPlaceholder.itemIndex !== null
@@ -120,6 +112,7 @@ function App() {
                           key={index}
                           data={item}
                           position={index}
+                          updateSP={setShowPlaceholder}
                           updateTargetIndex={(index) => {
                             //setTargetItemIndex(index);
                             setShowPlaceholder({
