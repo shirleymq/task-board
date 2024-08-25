@@ -12,7 +12,6 @@ export const Lane: FC<PropsWithChildren<LaneProps>> = forwardRef<
   return (
     <div
       onDragStart={(e) => {
-        console.log("arrastre LANE iniciado ", data.id);
         e.dataTransfer.effectAllowed = "move";
         e.dataTransfer.setData("lane/id", data.id.toString());
       }}
@@ -57,17 +56,14 @@ export const LaneBackground: FC<LaneBackgroundProps> = ({
         e.preventDefault();
         e.dataTransfer.dropEffect = "move";
         const laneElement = laneRef;
-        console.log("REF ", laneElement);
         if (laneElement) {
           const laneRect = laneElement.getBoundingClientRect();
           const bottomLaneY = laneRect.bottom;
           if (e.clientY < bottomLaneY) {
-            console.log("cursor sobre lane");
             if (data.items.length == 0) {
               updateTargetIndex(0);
             }
           } else {
-            console.log("cursor debajo de lane");
             updateTargetIndex(data.items.length);
           }
         }

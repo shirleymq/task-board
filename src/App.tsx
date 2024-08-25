@@ -13,7 +13,6 @@ import { BlankSpace } from "./components/blank-space";
 
 function App() {
   const [lanes, setLanes] = useState<Lane[]>(DATA);
-  //const [targetItemIndex, setTargetItemIndex] = useState<number | null>(null);
   const laneRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [showPlaceholder, setShowPlaceholder] = useState<{
     laneId: number | null;
@@ -22,7 +21,6 @@ function App() {
   const [height, setHeight] = useState<string>("0px");
 
   const handleDropItem = (itemId: number, targetLaneId: number) => {
-    //console.log("targetItemIndex ", targetItemIndex);
     const copyLanes: Lane[] = JSON.parse(JSON.stringify(lanes));
     let sourceLaneIndex = -1;
     let targetLaneIndex = -1;
@@ -86,7 +84,6 @@ function App() {
               onDropItem={handleDropItem}
               onDropLane={handleDropLane}
               updateTargetIndex={(index2) => {
-                //setTargetItemIndex(index2);
                 setShowPlaceholder({
                   laneId: lane.id,
                   itemIndex: index2,
@@ -112,9 +109,7 @@ function App() {
                           key={index}
                           data={item}
                           position={index}
-                          updateSP={setShowPlaceholder}
                           updateTargetIndex={(index) => {
-                            //setTargetItemIndex(index);
                             setShowPlaceholder({
                               laneId: lane.id,
                               itemIndex: index,
